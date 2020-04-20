@@ -4,11 +4,12 @@ var express = require("express"),
     mongoose = require("mongoose"),
     Campground = require("./public/javascripts/models/campground.js"),
     Comment = require("./public/javascripts/models/comment.js"),
+    methodOverride = require("method-override"),
     passport = require("passport"),
     LocalStrtegy = require("passport-local"),
     User = require("./public/javascripts/models/user"),
-    seedDB = require("./public/javascripts/seeds.js");
-
+    seedDB = require("./public/javascripts/seeds.js"),
+    flash = require("connect-flash");
 
 var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
@@ -25,6 +26,8 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
+app.use(methodOverride("_method"));
 passport.use(new LocalStrtegy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -38,6 +41,8 @@ app.use(express.static(__dirname + "/public"));
 app.use(function (req, res, next) {
     //currentUser is req.user when is needed so
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 

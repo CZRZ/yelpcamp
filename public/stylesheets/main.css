@@ -18,3 +18,9 @@ body {
 a {
     color: #00B7FF;
 }
+
+.delete_form {
+    display: inline;
+}
+
+
