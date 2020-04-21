@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Campground = require("../public/javascripts/models/campground");
+var Comment = require("../public/javascripts/models/comment");
 var middleware = require("../middleware"); //index.js is required when a directory is required
 
 
@@ -21,12 +22,13 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
     //redirect to campground page
     var name = req.body.name;
     var image = req.body.image;
+    var price = req.body.price;
     var description = req.body.description;
     var author = {
         id: req.user._id,
         username: req.user.username
     };
-    var newCampground = {name: name, image: image, description: description, author: author};
+    var newCampground = {name: name, image: image, price: price, description: description, author: author};
     //campground.push(newCampground);
     //create a new campground and save it to the database
     Campground.create(newCampground, function (err, newlyCreated) {
@@ -57,7 +59,7 @@ router.get("/:id", function (req, res) {
 });
 
 //edit campground route
-router.get("/:id/edit", middleware.checkCampgroundOwnership,function (req, res) {
+router.get("/:id/edit", middleware.checkCampgroundOwnership, function (req, res) {
     Campground.findById(req.params.id, function (err, foundCampground) {
         res.render("campgrounds/edit", {campground: foundCampground});
     });
@@ -75,7 +77,7 @@ router.put("/:id", function (req, res) {
     })
 });
 
-router.delete("/:id", middleware.checkCampgroundOwnership,function (req, res) {
+router.delete("/:id", middleware.checkCampgroundOwnership, function (req, res) {
     Campground.findByIdAndRemove(req.params.id, function (err, campgroundRemoved) {
         if (err) {
             res.redirect("/campground");
