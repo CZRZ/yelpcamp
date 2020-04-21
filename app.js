@@ -16,7 +16,7 @@ var commentRoutes = require("./routes/comments"),
     indexRoutes = require("./routes/index");
 
 //seedDB();
-mongoose.connect("mongodb+srv://dbUser:<dbCzrz>@cluster0-fok4b.mongodb.net/test?retryWrites=true&w=majority", {
+mongoose.connect('mongodb+srv://dbUser:dbCzrz@cluster0-fok4b.mongodb.net/test?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     userCreateIndex: true
 }).then( () =>{
