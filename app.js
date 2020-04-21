@@ -16,7 +16,14 @@ var commentRoutes = require("./routes/comments"),
     indexRoutes = require("./routes/index");
 
 //seedDB();
-mongoose.connect("mongodb://localhost:27017/yelp_camp_v3", {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://dbUser:<dbCzrz>@cluster0-fok4b.mongodb.net/test?retryWrites=true&w=majority", {
+    useNewUrlParser: true,
+    userCreateIndex: true
+}).then( () =>{
+    console.log("connect to db");
+}).catch(err => {
+    console.log("error", err.message);
+});
 
 //passport configuration
 app.use(require("express-session")({
