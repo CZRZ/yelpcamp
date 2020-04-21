@@ -16,7 +16,7 @@ var commentRoutes = require("./routes/comments"),
     indexRoutes = require("./routes/index");
 
 //seedDB();
-mongoose.connect('mongodb+srv://dbUser:dbCzrz@cluster0-fok4b.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(process.env.DATABASEURL, {
     useNewUrlParser: true,
     userCreateIndex: true
 }).then( () =>{
@@ -24,6 +24,7 @@ mongoose.connect('mongodb+srv://dbUser:dbCzrz@cluster0-fok4b.mongodb.net/test?re
 }).catch(err => {
     console.log("error", err.message);
 });
+
 
 //passport configuration
 app.use(require("express-session")({
